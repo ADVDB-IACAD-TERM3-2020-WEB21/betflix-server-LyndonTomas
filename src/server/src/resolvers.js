@@ -1,8 +1,19 @@
 // TODO: Import Mongoose here
-// TODO: Connect to mongo here
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser:true})
 
+// TODO: Connect to mongo here
+var mong = mongoose.connection
+mong.on('error', console.error.bind(console, 'connection error:'))
+mong.once('open', function(){
+  //we're connected
+})
+
+var movieSchema = new mongoose.Schema({
+  title: String
+})
 // TODO: Replace `{}` with actual Movie model
-const Movie = {}
+const Movie = mongoose.model('Movie', movieSchema)
 
 const getMovieList = async () => {
   return await Movie.find({})
